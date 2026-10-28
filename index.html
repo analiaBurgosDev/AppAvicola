@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style2.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6B8E23">
+  <meta name="mobile-web-app-capable" content="yes">  
+  <title>NID-OS | Gestión Avícola</title>
+  <!-- Google Icons / Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+
+<!-- PANTALLA DE LOGIN -->
+<section id="pantalla-auth" class="auth-container">
+  <div class="auth-card">
+    <div class="auth-logo-container">
+     
+  <div class="logo-imagen-wrapper">
+    <img src="logo-nidos.png" alt="NID-OS Logo" class="logo-real">
+  </div>
+  
+
+      <h1 class="auth-brand">NID-OS</h1>
+    </div>
+    <h3 class="auth-title">Iniciar Sesión</h3>
+    <form id="form-login">
+      <div class="campo-formulario">
+        <label for="login-email">Correo Electrónico</label>
+        <input type="email" id="login-email" placeholder="usuario@empresa.com" required>
+      </div>
+      <div class="campo-formulario">
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••" required>
+      </div>
+      <div id="login-error" class="alerta-error d-none"></div>
+      <button type="submit" class="btn-guardar" style="width: 100%; margin-top: 1.25rem;">Ingresar al Sistema</button>
+    </form>
+  </div>
+</section>
+
+<!-- BARRA DE USUARIO LOGUEADO -->
+<header id="header-usuario" class="d-none">
+  <div class="user-info-badge">
+    <span class="material-symbols-outlined" style="font-size: 18px; color: var(--color-marca);">account_circle</span>
+    <span id="user-email-display">--</span>
+    <span id="user-rol-badge" class="badge">--</span>
+  </div>
+  <button id="btn-logout">Cerrar Sesión</button>
+</header>
+
+<!-- ================= PANTALLA DE INICIO (SUPER ADMIN / GLOBAL) ================= -->
+<section id="inicio" class="pantalla-app">
+ <header class="app-header">
+  <div class="brand-logo-container">
+    <div class="header-logo-icon">
+      <img src="logo-nidos.png" alt="NID-OS Logo" class="logo-real-header">
+    </div>
+    <span class="brand-text">NID-OS</span>
+  </div>
+</header>
+
+  <main class="app-main">
+    <div class="bienvenida-banner">
+      <h2>Panel Principal</h2>
+      <p>Selecciona un módulo operativo para gestionar la producción y el rendimiento diario.</p>
+    </div>
+
+    <div class="lista-productos">
+      <article class="card-producto" data-rol="produccion,superadmin">
+        <div class="card-icon-wrapper" style="background: rgba(107, 142, 35, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">checklist</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h3 class="producto-titulo">Acciones Diarias</h3>
+          </div>
+          <p class="descripcionAcciones">
+            Registro y control diario de producción de huevos, alimentación e indicadores de mortalidad.
+          </p>
+          <a href="#menu-acciones-diarias" class="btn-entrar">Ingresar a Diarios</a>
+        </div>
+      </article>
+
+      <article class="card-producto" data-rol="finanzas,superadmin">
+        <div class="card-icon-wrapper" style="background: rgba(59, 130, 246, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h3 class="producto-titulo">Finanzas</h3>
+          </div>
+          <p class="descripcionAcciones">
+            Gestión económica: registro de ventas, compras/gastos e historial de clientes.
+          </p>
+          <a href="#menu-finanzas" class="btn-entrar">Ingresar a Finanzas</a>
+        </div>
+      </article>
+
+      <article class="card-producto" data-rol="admin,superadmin">
+        <div class="card-icon-wrapper" style="background: rgba(245, 158, 11, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">settings</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h3 class="producto-titulo">Administración</h3>
+          </div>
+          <p class="descripcionAcciones">
+            Control de infraestructura: gestión de galpones, grupos de aves (lotes) e inventario de stock.
+          </p>
+          <a href="#menu-administracion" class="btn-entrar">Ingresar a Administración</a>
+        </div>
+      </article>
+
+      <!-- NUEVA TARJETA: REPORTES Y BALANCES (SOLO SUPERADMIN) -->
+      <article class="card-producto" data-rol="superadmin">
+        <div class="card-icon-wrapper" style="background: rgba(34, 197, 94, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">analytics</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h3 class="producto-titulo">Reportes y Balances</h3>
+          </div>
+          <p class="descripcionAcciones">
+            Panel de control gerencial con indicadores clave, balances consolidados y resúmenes ejecutivos.
+          </p>
+          <a href="#panel-superadmin-reportes" class="btn-entrar">Ingresar a Balances</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- NAV GLOBAL / INICIO -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#inicio'">
+      <span class="material-symbols-outlined">home</span>
+      <span>Inicio</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#menu-acciones-diarias'">
+      <span class="material-symbols-outlined">checklist</span>
+      <span>Diarios</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#menu-finanzas'">
+      <span class="material-symbols-outlined">payments</span>
+      <span>Finanzas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#menu-administracion'">
+      <span class="material-symbols-outlined">settings</span>
+      <span>Admin</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#panel-superadmin-reportes'">
+      <span class="material-symbols-outlined">analytics</span>
+      <span>Balances</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= PANEL DE CONTROL GERENCIAL (SOLO SUPERADMIN) ================= -->
+<section id="panel-superadmin-reportes" class="pantalla-app" data-rol="superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">analytics</span>
+      <span class="brand-text">Balances y Reportes</span>
+    </div>
+    <div class="acciones-header">
+      <button type="button" class="btn-volver" onclick="window.print()" style="background-color: var(--color-marca); margin-right: 0.5rem;">🖨️ Imprimir / PDF</button>
+      <a href="#inicio" class="btn-volver">Volver al Inicio</a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- BARRA DE FILTRO POR MES GLOBAL -->
+    <div class="filtro-container no-imprimir">
+      <div class="campo-formulario filtro-campo">
+        <label for="filtro-mes-reportes">Seleccionar Período (Mes/Año):</label>
+        <input type="month" id="filtro-mes-reportes">
+      </div>
+      <button type="button" class="btn-entrar btn-limpiar-filtro" id="btn-limpiar-filtro-reportes">Mes Actual</button>
+    </div>
+
+    <!-- CABECERA DEL INFORME (VISIBLE AL IMPRIMIR) -->
+    <div class="encabezado-impresion">
+      <h2>NID-OS - REPORTE EJECUTIVO DE GESTIÓN AVÍCOLA</h2>
+      <p><strong>Período:</strong> <span id="reporte-periodo-texto">General</span> | <strong>Fecha de emisión:</strong> <span id="reporte-fecha-emision">--</span></p>
+      <hr style="margin: 1rem 0; border: 0; border-top: 1px solid var(--color-borde);">
+    </div>
+
+    <!-- METRICAS CONSOLIDADAS -->
+    <div class="grid-reportes">
+      
+      <!-- 1. BALANCE ECONÓMICO -->
+      <div class="tarjeta-usuario tarjeta-balance">
+        <div class="tarjeta-header">
+          <h4>Balance Económico Mensual</h4>
+          <span class="badge">Finanzas</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <p><strong>Total Ingresos (Ventas):</strong> <span id="rep-ingresos">$0</span></p>
+          <p><strong>Total Gastos (Compras):</strong> <span id="rep-gastos">$0</span></p>
+          <hr style="margin: 6px 0;">
+          <p><strong>Balance Neto:</strong> <span id="rep-balance-neto" style="font-size: 1.1rem; font-weight: bold;">$0</span></p>
+          <p><strong>Ticket Promedio por Venta:</strong> <span id="rep-ticket-promedio">$0</span></p>
+        </div>
+      </div>
+
+      <!-- 2. PRODUCCIÓN Y RENDIMIENTO -->
+      <div class="tarjeta-usuario tarjeta-resumen">
+        <div class="tarjeta-header">
+          <h4>Producción y Rendimiento</h4>
+          <span class="badge">Producción</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <p><strong>Porcentaje Postura Est.:</strong> <span id="rep-porcentaje-postura" style="font-weight: bold; color: var(--color-marca);">0%</span></p>
+          <p><strong>Huevos Totales Recolectados:</strong> <span id="rep-huevos-totales">0</span></p>
+          <p><strong>Huevos Comerciales Netos:</strong> <span id="rep-huevos-comerciales">0</span></p>
+          <p><strong>Huevos Descartados:</strong> <span id="rep-huevos-descarte">0</span></p>
+          <hr style="margin: 6px 0;">
+          <p><strong>Costo Alimento por Huevo:</strong> <span id="rep-costo-por-huevo">$0</span></p>
+        </div>
+      </div>
+
+      <!-- 3. ALIMENTACIÓN Y CONSUMO -->
+      <div class="tarjeta-usuario">
+        <div class="tarjeta-header">
+          <h4>Consumo de Alimento</h4>
+          <span class="badge">Alimentación</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <p><strong>Total Consumido:</strong> <span id="rep-kilos-consumidos" style="font-weight: bold; color: #3b82f6;">0 kg</span></p>
+          <p><strong>Consumo Promedio por Ave/Día:</strong> <span id="rep-consumo-promedio-ave">0 g</span></p>
+        </div>
+      </div>
+
+      <!-- 4. MORTALIDAD Y SALUD -->
+      <div class="tarjeta-usuario" style="border-left-color: var(--color-marca);">
+        <div class="tarjeta-header">
+          <h4>Mortalidad y Sanidad</h4>
+          <span class="badge" style="background-color: #fee2e2; color: var(--color-peligro);">Mortalidad</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <p><strong>Total Aves Perdidas:</strong> <span id="rep-bajas-totales">0 aves</span></p>
+          <p><strong>Tasa de Mortalidad Mensual:</strong> <span id="rep-tasa-mortalidad" style="font-weight: bold; color: var(--color-marca);">0%</span></p>
+          <p><strong>Causa Principal:</strong> <span id="rep-causa-principal">Sin registros</span></p>
+        </div>
+      </div>
+
+      <!-- 5. INFRAESTRUCTURA Y AVES -->
+      <div class="tarjeta-usuario">
+        <div class="tarjeta-header">
+          <h4>Estado de Capacidad y Aves</h4>
+          <span class="badge">Infraestructura</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <p><strong>Total Aves Activas:</strong> <span id="rep-aves-totales">0</span></p>
+          <p><strong>Ocupación de Galpones:</strong> <span id="rep-ocupacion-galpones">0%</span></p>
+          <p><strong>Lotes Activos:</strong> <span id="rep-lotes-activos">0</span></p>
+        </div>
+      </div>
+
+      <!-- 6. TOP CLIENTES DEL MES -->
+      <div class="tarjeta-usuario">
+        <div class="tarjeta-header">
+          <h4>Top Clientes del Mes</h4>
+          <span class="badge">Clientes</span>
+        </div>
+        <div class="tarjeta-cuerpo" id="rep-top-clientes">
+          <p class="texto-centrado-mutado">Sin ventas en este período.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</section>
+
+<!-- ================= MENÚ SECUNDARIO: ACCIONES DIARIAS ================= -->
+<section id="menu-acciones-diarias" class="pantalla-app" data-rol="produccion,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">checklist</span>
+      <span class="brand-text">Acciones Diarias</span>
+    </div>
+    <a href="#inicio" class="btn-volver">Volver al Inicio</a>
+  </header>
+
+  <main class="app-main">
+    <h3 class="seccion-titulo">Módulos de Producción y Control</h3>
+
+    <div class="lista-productos">
+      <div class="bloque-modulo">
+        <article class="card-producto">
+          <div class="card-icon-wrapper" style="background: rgba(107, 142, 35, 0.12); color: var(--color-marca);">
+            <span class="material-symbols-outlined">egg</span>
+          </div>
+          <div class="card-info">
+            <div class="card-header-info">
+              <h4 class="producto-titulo">PRODUCCIÓN</h4>
+            </div>
+            <p class="descripcionAcciones">Puedes registrar la producción día a día como también ver un resumen mensual.</p>
+            <a href="#formulario-accion-produccion" class="btn-entrar">Entrar</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="bloque-modulo" style="margin-top: 15px;">
+        <article class="card-producto">
+          <div class="card-icon-wrapper" style="background: rgba(59, 130, 246, 0.12); color: var(--color-marca);">
+            <span class="material-symbols-outlined">nutrition</span>
+          </div>
+          <div class="card-info">
+            <div class="card-header-info">
+              <h4 class="producto-titulo">ALIMENTACIÓN</h4>
+            </div>
+            <p class="descripcionAcciones">Puedes registrar aquí la alimentación día a día.</p>
+            <a href="#formulario-accion-alimentacion" class="btn-entrar">Entrar</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="bloque-modulo" style="margin-top: 15px;">
+        <article class="card-producto">
+          <div class="card-icon-wrapper" style="background: rgba(220, 38, 38, 0.12); color: var(--color-marca);">
+            <span class="material-symbols-outlined">report</span>
+          </div>
+          <div class="card-info">
+            <div class="card-header-info">
+              <h4 class="producto-titulo">MORTALIDAD</h4>
+            </div>
+            <p class="descripcionAcciones">Puedes registrar las pérdidas en los grupos de aves.</p>
+            <a href="#formulario-accion-mortalidad" class="btn-entrar">Entrar</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- NAV PROPIO: ACCIONES DIARIAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-acciones-diarias'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Diarios</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-produccion'">
+      <span class="material-symbols-outlined">egg</span>
+      <span>Producción</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-alimentacion'">
+      <span class="material-symbols-outlined">nutrition</span>
+      <span>Alimento</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-mortalidad'">
+      <span class="material-symbols-outlined">report</span>
+      <span>Mortalidad</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO PRODUCCIÓN ================= -->
+<section id="formulario-accion-produccion" class="pantalla-app" data-rol="produccion,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">egg</span>
+      <span class="brand-text">Formulario Producción</span>
+    </div>
+    <a href="#menu-acciones-diarias" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Registrar Producción</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="prod-lote">Seleccione el lote:</label>
+          <select id="prod-lote" class="select-lotes" required>
+            <option value="">Cargando lotes...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="prod-fecha">Fecha:</label>
+          <input type="date" id="prod-fecha" class="input-fecha-hoy" readonly>
+        </div>
+        <div class="campo-formulario">
+          <label for="prod-descarte">Cantidad de huevos descartados:</label>
+          <input type="number" id="prod-descarte" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="prod-comercial">Cantidad de huevos comerciales:</label>
+          <input type="number" id="prod-comercial" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="prod-obs">Observaciones:</label>
+          <input type="text" id="prod-obs" placeholder="Detalles de la recolección">
+        </div>
+        <div class="campo-formulario">
+          <label for="prod-maples">Maples usados:</label>
+          <input type="number" id="prod-maples" inputmode="numeric" placeholder="0" required>
+        </div>
+        <button type="submit" class="btn-guardar">Registrar</button>
+      </form>
+    </section>
+
+    <section id="vista-produccion" style="margin-top: 2rem;">
+      <h3>Historial de Producción de Huevos</h3>
+      <div class="filtro-container">
+        <div class="campo-formulario filtro-campo">
+          <label for="filtro-mes-produccion">Filtrar por mes:</label>
+          <input type="month" id="filtro-mes-produccion">
+        </div>
+        <button type="button" class="btn-entrar btn-limpiar-filtro" id="btn-limpiar-filtro">Ver Todo</button>
+      </div>
+      <div class="table-responsive">
+        <table class="tabla-gestion">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Lote / Raza</th>
+              <th>Comerciales</th>
+              <th>Descarte</th>
+              <th>Maples Usados</th>
+              <th>Observaciones</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-cuerpo-produccion">
+            <tr><td colspan="7" class="texto-centrado-mutado">Cargando registros de producción...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: ACCIONES DIARIAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-acciones-diarias'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Diarios</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-produccion'">
+      <span class="material-symbols-outlined">egg</span>
+      <span>Producción</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-alimentacion'">
+      <span class="material-symbols-outlined">nutrition</span>
+      <span>Alimento</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-mortalidad'">
+      <span class="material-symbols-outlined">report</span>
+      <span>Mortalidad</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO ALIMENTACIÓN ================= -->
+<section id="formulario-accion-alimentacion" class="pantalla-app" data-rol="produccion,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-acento);">nutrition</span>
+      <span class="brand-text">Formulario Alimentación</span>
+    </div>
+    <a href="#menu-acciones-diarias" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Registrar Alimentación</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="alim-lote">Seleccione el lote:</label>
+          <select id="alim-lote" class="select-lotes" required>
+            <option value="">Cargando lotes...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="alim-fecha">Fecha:</label>
+          <input type="date" id="alim-fecha" class="input-fecha-hoy" readonly>
+        </div>
+        <div class="campo-formulario">
+          <label for="alim-turno">Turno:</label>
+          <select id="alim-turno" required>
+            <option value="mañana">Mañana</option>
+            <option value="tarde">Tarde</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="alim-insumo">Seleccione el insumo alimenticio:</label>
+          <select id="alim-insumo" class="select-insumos" required>
+            <option value="">Cargando insumos...</option>
+          </select>
+        </div> 
+        <div class="campo-formulario">
+          <label for="alim-kilos">Kilos de alimento consumidos:</label>
+          <input type="number" id="alim-kilos" inputmode="numeric" step="0.1" placeholder="0.0" required>
+        </div>
+        <button type="submit" class="btn-guardar">Registrar</button>
+      </form>
+
+      <section id="vista-alimentacion" style="margin-top: 2rem;">
+        <h3>Historial de Alimentación de Aves</h3>
+        <div class="filtro-container">
+          <div class="campo-formulario filtro-campo">
+            <label for="filtro-mes-alimentacion">Filtrar por mes:</label>
+            <input type="month" id="filtro-mes-alimentacion">
+          </div>
+          <button type="button" class="btn-entrar btn-limpiar-filtro" id="btn-limpiar-filtro-alim">Ver Todo</button>
+        </div>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Lote</th>
+                <th>Turno</th>
+                <th>Kilos Consumidos</th>
+                <th>Insumo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-alimentacion">
+              <tr><td colspan="6" class="texto-centrado-mutado">Cargando registros de alimentación...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: ACCIONES DIARIAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-acciones-diarias'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Diarios</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-produccion'">
+      <span class="material-symbols-outlined">egg</span>
+      <span>Producción</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-alimentacion'">
+      <span class="material-symbols-outlined">nutrition</span>
+      <span>Alimento</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-mortalidad'">
+      <span class="material-symbols-outlined">report</span>
+      <span>Mortalidad</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO MORTALIDAD ================= -->
+<section id="formulario-accion-mortalidad" class="pantalla-app" data-rol="produccion,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-peligro);">report</span>
+      <span class="brand-text">Formulario Mortalidad</span>
+    </div>
+    <a href="#menu-acciones-diarias" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Registrar Mortalidad</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="mortalidad-lote">Seleccione el lote:</label>
+          <select id="mortalidad-lote" class="select-lotes" required>
+            <option value="">Cargando lotes...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="mortalidad-fecha">Fecha:</label>
+          <input type="date" id="mortalidad-fecha" class="input-fecha-hoy" readonly>
+        </div>
+        <div class="campo-formulario">
+          <label for="mortalidad-cantidad">Cantidad de aves perdidas:</label>
+          <input type="number" id="mortalidad-cantidad" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="mortalidad-motivo">Motivo / Causa / Razón:</label>
+          <input type="text" id="mortalidad-motivo" placeholder="Ej: picaje, enfermedad, etc." required>
+        </div>
+        <button type="submit" class="btn-guardar">Registrar</button>
+      </form>
+    </section>
+    
+    <section id="vista-mortalidad" style="margin-top: 2rem;">
+      <h3>Historial de Mortalidad de Aves</h3>
+      <div class="filtro-container">
+        <div class="campo-formulario filtro-campo">
+          <label for="filtro-mes-mortalidad">Filtrar por mes:</label>
+          <input type="month" id="filtro-mes-mortalidad">
+        </div>
+        <button type="button" class="btn-entrar btn-limpiar-filtro" id="btn-limpiar-filtro-mortalidad">Ver Todo</button>
+      </div>
+      <div class="table-responsive">
+        <table class="tabla-gestion">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Lote</th>
+              <th>Cantidad de Bajas</th>
+              <th>Causa</th>
+              <th>Observaciones</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-cuerpo-mortalidad">
+            <tr><td colspan="6" class="texto-centrado-mutado">Cargando registros de mortalidad...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: ACCIONES DIARIAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-acciones-diarias'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Diarios</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-produccion'">
+      <span class="material-symbols-outlined">egg</span>
+      <span>Producción</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-alimentacion'">
+      <span class="material-symbols-outlined">nutrition</span>
+      <span>Alimento</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-mortalidad'">
+      <span class="material-symbols-outlined">report</span>
+      <span>Mortalidad</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= MENÚ SECUNDARIO: FINANZAS ================= -->
+<section id="menu-finanzas" class="pantalla-app" data-rol="finanzas,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-acento);">payments</span>
+      <span class="brand-text">Finanzas</span>
+    </div>
+    <a href="#inicio" class="btn-volver">Volver al Inicio</a>
+  </header>
+
+  <main class="app-main">
+    <h3 class="seccion-titulo">Seleccione un Módulo Financiero</h3>
+
+    <div class="lista-productos">
+      <article class="card-producto">
+        <div class="card-icon-wrapper" style="background: rgba(34, 197, 94, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">point_of_sale</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h4 class="producto-titulo">VENTAS</h4>
+          </div>
+          <p class="descripcionAcciones">Puedes ver los últimos ingresos y ventas como también registrar nuevas.</p>
+          <a href="#formulario-accion-ventas" class="btn-entrar">Entrar</a>
+        </div>
+      </article>
+
+      <article class="card-producto">
+        <div class="card-icon-wrapper" style="background: rgba(245, 158, 11, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">shopping_bag</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h4 class="producto-titulo">GASTOS / COMPRAS</h4>
+          </div>
+          <p class="descripcionAcciones">Puedes ver las últimas salidas y gastos como también registrar nuevos.</p>
+          <a href="#formulario-accion-gastos-compras" class="btn-entrar">Entrar</a>
+        </div>
+      </article>
+
+      <article class="card-producto">
+        <div class="card-icon-wrapper" style="background: rgba(59, 130, 246, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">group</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h4 class="producto-titulo">CLIENTES</h4>
+          </div>
+          <p class="descripcionAcciones">Puedes ver una lista de todos tus clientes como también registrar nuevos.</p>
+          <a href="#formulario-accion-clientes" class="btn-entrar">Entrar</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- NAV PROPIO: FINANZAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-finanzas'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Finanzas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-ventas'">
+      <span class="material-symbols-outlined">point_of_sale</span>
+      <span>Ventas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-gastos-compras'">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span>Gastos</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-clientes'">
+      <span class="material-symbols-outlined">group</span>
+      <span>Clientes</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO VENTAS ================= -->
+<section id="formulario-accion-ventas" class="pantalla-app" data-rol="finanzas,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-secundario);">point_of_sale</span>
+      <span class="brand-text">Formulario Ventas</span>
+    </div>
+    <a href="#menu-finanzas" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Registrar Venta</h3>
+      <form class="formulario" id="form-registrar-venta">
+        <div class="campo-formulario">
+          <label for="venta-cliente">Seleccionar cliente:</label>
+          <select id="venta-cliente" class="select-clientes" required>
+            <option value="">Cargando clientes...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="venta-insumo">Seleccionar producto/insumo vendido:</label>
+          <select id="venta-insumo" class="select-insumos" required>
+            <option value="">Cargando insumos...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="venta-fecha">Fecha:</label>
+          <input type="date" id="venta-fecha" class="input-fecha-hoy" readonly>
+        </div>
+        <div class="campo-formulario">
+          <label for="venta-monto">Monto total ($):</label>
+          <input type="number" id="venta-monto" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="venta-estado">Estado del pago:</label>
+          <select id="venta-estado" required>
+            <option value="realizado">Realizado</option>
+            <option value="en proceso">En proceso</option>
+            <option value="nulo">Nulo</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="venta-maples">Cantidad vendida (maples/unidades):</label>
+          <input type="number" id="venta-maples" inputmode="numeric" placeholder="0" required>
+        </div>
+        <button type="submit" class="btn-guardar">Registrar</button>
+      </form>
+
+      <div class="lista-container" style="display: block; margin-top: 2rem;">
+        <h3>Historial de Ventas</h3>
+        <div class="filtro-container">
+          <div class="campo-formulario filtro-campo">
+            <label for="filtro-mes-ventas">Filtrar por mes:</label>
+            <input type="month" id="filtro-mes-ventas">
+          </div>
+          <button type="button" class="btn-entrar btn-limpiar-filtro" id="btn-limpiar-filtro-ventas">Ver Todo</button>
+        </div>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Cantidad</th>
+                <th>Monto ($)</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-ventas">
+              <tr><td colspan="6" class="texto-centrado-mutado">Cargando lista de ventas...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: FINANZAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-finanzas'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Finanzas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-ventas'">
+      <span class="material-symbols-outlined">point_of_sale</span>
+      <span>Ventas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-gastos-compras'">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span>Gastos</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-clientes'">
+      <span class="material-symbols-outlined">group</span>
+      <span>Clientes</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO GASTOS / COMPRAS ================= -->
+<section id="formulario-accion-gastos-compras" class="pantalla-app" data-rol="finanzas,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-alerta);">shopping_bag</span>
+      <span class="brand-text">Formulario Gastos</span>
+    </div>
+    <a href="#menu-finanzas" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Registrar Gastos / Compras</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="gasto-fecha">Fecha:</label>
+          <input type="date" id="gasto-fecha" class="input-fecha-hoy" readonly>
+        </div>
+        <div class="campo-formulario">
+          <label for="gasto-insumo">Seleccione el insumo comprado:</label>
+          <select id="gasto-insumo" class="select-insumos" required>
+            <option value="">Cargando insumos...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="gasto-cantidad">Cantidad:</label>
+          <input type="number" id="gasto-cantidad" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="gasto-precio">Precio unitario ($):</label>
+          <input type="number" id="gasto-precio" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="gasto-total">Monto total ($):</label>
+          <input type="number" id="gasto-total" inputmode="numeric" placeholder="0" required>
+        </div>
+        <button type="submit" class="btn-guardar">Registrar</button>
+      </form>
+
+      <div class="lista-container" style="display: block; margin-top: 2rem;">
+        <h3>Historial de Gastos / Compras</h3>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Insumo / Producto</th>
+                <th>Cantidad</th>
+                <th>Gasto Total ($)</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-compras">
+              <tr><td colspan="5" class="texto-centrado-mutado">Cargando lista de compras...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: FINANZAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-finanzas'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Finanzas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-ventas'">
+      <span class="material-symbols-outlined">point_of_sale</span>
+      <span>Ventas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-gastos-compras'">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span>Gastos</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-clientes'">
+      <span class="material-symbols-outlined">group</span>
+      <span>Clientes</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO CLIENTES ================= -->
+<section id="formulario-accion-clientes" class="pantalla-app" data-rol="finanzas,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-acento);">group</span>
+      <span class="brand-text">Formulario Clientes</span>
+    </div>
+    <a href="#menu-finanzas" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Cargar / Editar Cliente</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="cliente-nombre">Nombre completo:</label>
+          <input type="text" id="cliente-nombre" placeholder="Nombre completo" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="cliente-telefono">Número de teléfono:</label>
+          <input type="number" id="cliente-telefono" inputmode="numeric" placeholder="Ej: 1122334455" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="cliente-email">Email:</label>
+          <input type="email" id="cliente-email" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="cliente-tipo">Tipo de cliente:</label>
+          <select id="cliente-tipo" required>
+            <option value="mayorista">Mayorista</option>
+            <option value="minorista">Minorista</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="cliente-ubicacion">Ubicación:</label>
+          <input type="text" id="cliente-ubicacion" placeholder="Dirección / Ciudad" required>
+        </div>
+        <button type="submit" class="btn-guardar">Guardar</button>
+      </form>
+
+      <div class="lista-container" style="display: block; margin-top: 2rem;">
+        <h3>Directorio de Clientes</h3>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>Nombre Completo</th>
+                <th>Teléfono / WhatsApp</th>
+                <th>Email</th>
+                <th>Tipo</th>
+                <th>Ubicación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-clientes">
+              <tr><td colspan="6" class="texto-centrado-mutado">Cargando lista de clientes...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: FINANZAS -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-finanzas'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Finanzas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-ventas'">
+      <span class="material-symbols-outlined">point_of_sale</span>
+      <span>Ventas</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-gastos-compras'">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span>Gastos</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-clientes'">
+      <span class="material-symbols-outlined">group</span>
+      <span>Clientes</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= MENÚ SECUNDARIO: ADMINISTRACIÓN ================= -->
+<section id="menu-administracion" class="pantalla-app" data-rol="admin,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">settings</span>
+      <span class="brand-text">Administración</span>
+    </div>
+    <a href="#inicio" class="btn-volver">Volver al Inicio</a>
+  </header>
+
+  <main class="app-main">
+    <h3 class="seccion-titulo">Seleccione un Módulo Administrativo</h3>
+
+    <div class="lista-productos">
+      <article class="card-producto">
+        <div class="card-icon-wrapper" style="background: rgba(107, 142, 35, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">warehouse</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h4 class="producto-titulo">GALPONES</h4>
+          </div>
+          <p class="descripcionAcciones">Ver y registrar galpones o instalaciones.</p>
+          <a href="#formulario-accion-galpones" class="btn-entrar">Entrar</a>
+        </div>
+      </article>
+
+      <article class="card-producto">
+        <div class="card-icon-wrapper" style="background: rgba(59, 130, 246, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">nest_cam_indoor</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h4 class="producto-titulo">LOTES DE AVES</h4>
+          </div>
+          <p class="descripcionAcciones">Puedes ver tus grupos de aves y registrar nuevos.</p>
+          <a href="#formulario-accion-lotes-aves" class="btn-entrar">Entrar</a>
+        </div>
+      </article>
+
+      <article class="card-producto">
+        <div class="card-icon-wrapper" style="background: rgba(245, 158, 11, 0.12); color: var(--color-marca);">
+          <span class="material-symbols-outlined">inventory_2</span>
+        </div>
+        <div class="card-info">
+          <div class="card-header-info">
+            <h4 class="producto-titulo">STOCK / INVENTARIO</h4>
+          </div>
+          <p class="descripcionAcciones">Puedes ver aquí todo tu inventario como también cargar nuevos insumos y objetos.</p>
+          <a href="#formulario-accion-stock" class="btn-entrar">Entrar</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- NAV PROPIO: ADMINISTRACIÓN -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-administracion'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Admin</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-galpones'">
+      <span class="material-symbols-outlined">warehouse</span>
+      <span>Galpones</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-lotes-aves'">
+      <span class="material-symbols-outlined">nest_cam_indoor</span>
+      <span>Lotes</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-stock'">
+      <span class="material-symbols-outlined">inventory_2</span>
+      <span>Stock</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO GALPONES ================= -->
+<section id="formulario-accion-galpones" class="pantalla-app" data-rol="admin,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">warehouse</span>
+      <span class="brand-text">Formulario Galpones</span>
+    </div>
+    <a href="#menu-administracion" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Cargar Galpón</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="galpon-nombre">Nombre del Galpón:</label>
+          <input type="text" id="galpon-nombre" placeholder="Ej: Galpón 1" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="galpon-estado">Estado:</label>
+          <select id="galpon-estado" required>
+            <option value="activo">Activo</option>
+            <option value="mantenimiento">En Mantenimiento</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="galpon-capacidad-max">Capacidad Máxima (aves):</label>
+          <input type="number" id="galpon-capacidad-max" inputmode="numeric" placeholder="Ej: 1500" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="galpon-capacidad-actual">Capacidad Actual (aves):</label>
+          <input type="number" id="galpon-capacidad-actual" inputmode="numeric" placeholder="Ej: 0" value="0" required>
+        </div>
+        <button type="submit" class="btn-guardar">Guardar Galpón</button>
+      </form>
+      <div class="lista-container" style="display: block; margin-top: 2rem;">
+        <h3>Listado de Galpones</h3>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Capacidad Máxima</th>
+                <th>Capacidad Actual</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-galpones">
+              <tr><td colspan="5" class="texto-centrado-mutado">Cargando galpones...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div> 
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: ADMINISTRACIÓN -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-administracion'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Admin</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-galpones'">
+      <span class="material-symbols-outlined">warehouse</span>
+      <span>Galpones</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-lotes-aves'">
+      <span class="material-symbols-outlined">nest_cam_indoor</span>
+      <span>Lotes</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-stock'">
+      <span class="material-symbols-outlined">inventory_2</span>
+      <span>Stock</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO LOTES DE AVES ================= -->
+<section id="formulario-accion-lotes-aves" class="pantalla-app" data-rol="admin,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">nest_cam_indoor</span>
+      <span class="brand-text">Formulario Lotes</span>
+    </div>
+    <a href="#menu-administracion" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Cargar Lote de Aves</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="lote-galpon">Seleccione el galpón:</label>
+          <select id="lote-galpon" class="select-galpon" required>
+            <option value="">Cargando galpones...</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="lote-raza">Raza de ave:</label>
+          <select id="lote-raza" required>
+            <option value="blancas">Blancas</option>
+            <option value="marrones">Marrones</option>
+            <option value="negras">Negras</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="lote-cantidad">Cantidad de aves:</label>
+          <input type="number" id="lote-cantidad" inputmode="numeric" placeholder="0" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="lote-fecha">Fecha de ingreso:</label>
+          <input type="date" id="lote-fecha" class="input-fecha-hoy" readonly>
+        </div>
+        <div class="campo-formulario">
+          <label for="lote-edad">Edad de ingreso (en meses):</label>
+          <input type="number" id="lote-edad" inputmode="numeric" placeholder="Ej: 4" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="lote-estado">Estado:</label>
+          <select id="lote-estado" required>
+            <option value="previas a postura">Previas a postura</option>
+            <option value="en postura">En postura</option>
+            <option value="sin postura">Sin postura</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-guardar">Guardar Lote</button>
+      </form>
+      <div class="lista-container" style="display: block; margin-top: 2rem;">
+        <h3>Lotes de Aves Activos</h3>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>ID / Raza</th>
+                <th>Ubicación (Galpón)</th>
+                <th>Cantidad Inicial</th>
+                <th>Fecha Ingreso</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-lotes">
+              <tr><td colspan="6" class="texto-centrado-mutado">Cargando lotes de aves...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: ADMINISTRACIÓN -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-administracion'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Admin</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-galpones'">
+      <span class="material-symbols-outlined">warehouse</span>
+      <span>Galpones</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-lotes-aves'">
+      <span class="material-symbols-outlined">nest_cam_indoor</span>
+      <span>Lotes</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-stock'">
+      <span class="material-symbols-outlined">inventory_2</span>
+      <span>Stock</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ================= FORMULARIO STOCK / INVENTARIO ================= -->
+<section id="formulario-accion-stock" class="pantalla-app" data-rol="admin,superadmin">
+  <header class="app-header">
+    <div class="brand-logo-container">
+      <span class="material-symbols-outlined" style="color: var(--color-marca);">inventory_2</span>
+      <span class="brand-text">Formulario Stock</span>
+    </div>
+    <a href="#menu-administracion" class="btn-volver">Volver</a>
+  </header>
+  <main class="app-main">
+    <section>
+      <h3 class="seccion-titulo">Registrar Insumo / Objeto</h3>
+      <form class="formulario">
+        <div class="campo-formulario">
+          <label for="stock-nombre">Nombre del insumo:</label>
+          <input type="text" id="stock-nombre" placeholder="Ej: Alimento Alta Postura / Maples vacíos" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="stock-tipo">Tipo de insumo:</label>
+          <select id="stock-tipo" required>
+            <option value="consumible">Consumible (Alimento, medicamentos, etc.)</option>
+            <option value="herramienta">No consumible (Herramientas, equipos, etc.)</option>
+            <option value="producto_final">Producto Final (Maples para venta)</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="stock-categoria">Categoría específica:</label>
+          <select id="stock-categoria" required>
+            <option value="alimento">Alimento</option>
+            <option value="empaque">Empaque / Cartonería</option>
+            <option value="sanidad">Sanidad / Vacunas</option>
+            <option value="general">General / Herramientas</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="stock-unidad">Unidad de medida:</label>
+          <select id="stock-unidad" required>
+            <option value="kg">Kilos (kg)</option>
+            <option value="unidades">Unidades / Piezas</option>
+            <option value="maples">Maples</option>
+            <option value="litros">Litros</option>
+          </select>
+        </div>
+        <div class="campo-formulario">
+          <label for="stock-cantidad">Cantidad inicial:</label>
+          <input type="number" id="stock-cantidad" step="0.01" inputmode="decimal" placeholder="0.0" required>
+        </div>
+        <button type="submit" class="btn-guardar">Guardar Insumo</button>
+      </form>
+
+      <div class="lista-container" style="display: block; margin-top: 2rem;">
+        <h3>Inventario de Stock</h3>
+        <div class="table-responsive">
+          <table class="tabla-gestion">
+            <thead>
+              <tr>
+                <th>Nombre del Insumo</th>
+                <th>Tipo</th>
+                <th>Categoría</th>
+                <th>Cantidad Actual</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-cuerpo-stock">
+              <tr><td colspan="5" class="texto-centrado-mutado">Cargando inventario...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NAV PROPIO: ADMINISTRACIÓN -->
+  <nav class="bottom-nav">
+    <button class="nav-item" onclick="window.location.hash='#menu-administracion'">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Panel Admin</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-galpones'">
+      <span class="material-symbols-outlined">warehouse</span>
+      <span>Galpones</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-lotes-aves'">
+      <span class="material-symbols-outlined">nest_cam_indoor</span>
+      <span>Lotes</span>
+    </button>
+    <button class="nav-item" onclick="window.location.hash='#formulario-accion-stock'">
+      <span class="material-symbols-outlined">inventory_2</span>
+      <span>Stock</span>
+    </button>
+  </nav>
+</section>
+
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Archivo JS -->
+<!-- Archivos JS Modulares (Orden de dependencias) -->
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="forms.js"></script>
+<script src="module.js"></script>
+<script src="reports.js"></script>
+<script src="navigation.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,821 @@
+/*--------------------------------------------------------------------------
+  ESTILOS GENERALES - NID-OS GESTIÓN AVÍCOLA
+--------------------------------------------------------------------------*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-marca: #6B8E23;
+  --color-marca-hover: #55711C;
+  --color-marca-claro: #8FAF52;
+  --color-marca-muy-claro: #EBF3E8;
+  --color-marca-muy-oscuro: #3E5315;
+
+  --color-acento: #3B82F6;
+  --color-secundario: #22C55E;
+  --color-resumen-borde: #10b981;
+  --color-peligro: #DC2626;
+  --color-peligro-hover: #b91c1c;
+  --color-alerta: #F59E0B;
+  --color-alerta-hover: #D97706;
+
+  --color-fondo: #F4F6F0;
+  --color-superficie: #FFFFFF;
+  --color-texto: #2C3524;
+  --color-texto-mutado: #64748B;
+  --color-borde: #E2E8F0;
+
+  --sombra-tarjeta: 0 10.5px 24px -6px rgba(50, 70, 30, 0.08), 0 4px 6px -4px rgba(50, 70, 30, 0.04);
+  --sombra-hover: 0 20px 30px -10px rgba(107, 142, 35, 0.18), 0 8px 12px -6px rgba(0, 0, 0, 0.08);
+  --sombra-boton: 0 4px 12px rgba(107, 142, 35, 0.25);
+
+  --fuente-app: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --radio-tarjeta: 1rem;      
+  --radio-boton: 0.65rem;         
+  --gap-estandar: 1.5rem;          
+}
+
+body {
+  font-family: var(--fuente-app);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.5;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 85px;
+  animation: fadeInApp 0.4s ease-out;
+}
+
+@keyframes fadeInApp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= LOGIN VIVO CON GRADIENTE DE MARCA ================= */
+.auth-container {
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background: linear-gradient(-45deg, var(--color-marca-muy-oscuro), var(--color-marca), var(--color-marca-claro), var(--color-marca-muy-claro));
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.auth-card {
+  background-color: var(--color-superficie);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radio-tarjeta);
+  border: 1px solid var(--color-borde);
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.auth-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  background-color: transparent;
+}
+
+/* Contenedor circular del logo con los tonos de la marca */
+.logo-imagen-wrapper {
+  width: 95px;
+  height: 95px;
+  background: linear-gradient(135deg, var(--color-marca), var(--color-marca-muy-oscuro));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(62, 83, 21, 0.35);
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+
+.logo-real {
+  width: 180%;
+  height: 180%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.auth-brand {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--color-marca-muy-oscuro);
+  letter-spacing: 1px;
+}
+
+.auth-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-texto-mutado);
+}
+
+.alerta-error {
+  background-color: #fee2e2;
+  color: var(--color-peligro);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radio-boton);
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  border-left: 4px solid var(--color-peligro);
+}
+
+/* ================= BOTÓN DE INGRESO EN BLANCO DESTACADO ================= */
+.auth-card .btn-guardar {
+  background-color: #FFFFFF !important;
+  color: var(--color-marca-muy-oscuro) !important;
+  border: 2px solid var(--color-marca-claro) !important;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.85rem 1.25rem;
+  box-shadow: 0 8px 20px rgba(62, 83, 21, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pulseButton 3s infinite ease-in-out;
+  width: 100%;
+  margin-top: 1.25rem;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+  text-align: center;
+}
+
+@keyframes pulseButton {
+  0%, 100% { transform: scale(1); box-shadow: 0 8px 20px rgba(62, 83, 21, 0.15); }
+  50% { transform: scale(1.02); box-shadow: 0 12px 25px rgba(62, 83, 21, 0.25); }
+}
+
+.auth-card .btn-guardar:hover {
+  background-color: var(--color-marca-muy-claro) !important;
+  border-color: var(--color-marca) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(62, 83, 21, 0.3);
+}
+
+/* ================= HEADER DINÁMICO ================= */
+.app-header {
+  background-color: var(--color-superficie);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--color-borde);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+.brand-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-logo-icon {
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-marca);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(107, 142, 35, 0.2);
+}
+
+.logo-real-header {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.brand-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-marca-muy-oscuro);
+  letter-spacing: 0.5px;
+}
+
+#header-usuario {
+  background-color: #F8FAF6;
+  border-bottom: 1px solid var(--color-borde);
+  padding: 0.6rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.user-info-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#btn-logout {
+  background-color: transparent;
+  color: var(--color-peligro);
+  border: 1px solid #fecaca;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radio-boton);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#btn-logout:hover {
+  background-color: var(--color-peligro);
+  color: #ffffff;
+  border-color: var(--color-peligro);
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bienvenida-banner {
+  background: linear-gradient(135deg, var(--color-marca-muy-oscuro), var(--color-marca));
+  color: white;
+  padding: 1.75rem;
+  border-radius: var(--radio-tarjeta);
+  box-shadow: var(--sombra-tarjeta);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bienvenida-banner h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.bienvenida-banner p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.seccion-titulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-marca-muy-oscuro);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ================= TARJETAS CON VIDA Y ANIMACIÓN ================= */
+.lista-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-estandar);
+}
+
+.card-producto {
+  background-color: var(--color-superficie);
+  border-radius: var(--radio-tarjeta);
+  border: 1px solid var(--color-borde);
+  overflow: hidden;
+  box-shadow: var(--sombra-tarjeta);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.card-producto:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-hover);
+  border-color: var(--color-marca-claro);
+}
+
+.card-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  transition: transform 0.3s ease;
+}
+
+.card-producto:hover .card-icon-wrapper {
+  transform: scale(1.1) rotate(4deg);
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.producto-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-texto);
+}
+
+.descripcionAcciones {
+  font-size: 0.875rem;
+  color: var(--color-texto-mutado);
+  line-height: 1.4;
+}
+
+/* ================= BOTONES DINÁMICOS Y ANIMADOS ================= */
+.btn-entrar,
+.btn-guardar,
+.btn-volver {
+  font-family: inherit;
+  background-color: var(--color-marca);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radio-boton);
+  font-weight: 600;
+  font-size: 0.925rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: var(--sombra-boton);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-entrar::after,
+.btn-guardar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.btn-entrar:hover::after,
+.btn-guardar:hover::after {
+  opacity: 1;
+}
+
+.btn-entrar:hover,
+.btn-guardar:hover,
+.btn-volver:hover {
+  background-color: var(--color-marca-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 142, 35, 0.35);
+}
+
+.btn-volver {
+  background-color: #64748B;
+  font-size: 0.825rem;
+  padding: 0.45rem 0.95rem;
+  box-shadow: 0 2px 6px rgba(100, 116, 139, 0.2);
+}
+
+.btn-volver:hover {
+  background-color: #475569;
+}
+
+.acciones {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-editar,
+.btn-eliminar {
+  font-family: inherit;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radio-boton);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.btn-editar {
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+.btn-editar:hover {
+  background-color: #FDE68A;
+  transform: translateY(-1px);
+}
+
+.btn-eliminar {
+  background-color: #FEE2E2;
+  color: #B91C1C;
+}
+
+.btn-eliminar:hover {
+  background-color: #FECACA;
+  transform: translateY(-1px);
+}
+
+/* ================= TARJETAS DE USUARIO Y RESÚMENES ================= */
+.tarjeta-usuario {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-left: 5px solid var(--color-marca);
+  border-radius: var(--radio-tarjeta);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: var(--sombra-tarjeta);
+  transition: transform 0.2s ease;
+}
+
+.tarjeta-usuario:hover {
+  transform: translateY(-2px);
+}
+
+.tarjeta-resumen,
+.tarjeta-balance {
+  border-left: 5px solid var(--color-resumen-borde) !important;
+}
+
+.badge {
+  background-color: var(--color-marca-muy-claro);
+  color: var(--color-marca-muy-oscuro);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 1rem;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
+
+/* ================= FORMULARIOS Y CAMPOS ================= */
+.formulario {
+  background-color: var(--color-superficie);
+  padding: 1.75rem;
+  border-radius: var(--radio-tarjeta);
+  border: 1px solid var(--color-borde);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  box-shadow: var(--sombra-tarjeta);
+}
+
+@media (min-width: 640px) {
+  .formulario {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .formulario .btn-guardar {
+    grid-column: span 2;
+  }
+}
+
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo-formulario label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.campo-formulario input,
+.campo-formulario select {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-boton);
+  outline: none;
+  background-color: #FAFAF7;
+  color: var(--color-texto);
+  transition: all 0.2s ease;
+}
+
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+  border-color: var(--color-marca);
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(107, 142, 35, 0.15);
+}
+
+.campo-formulario input[readonly] {
+  background-color: #F1F5F9;
+  color: var(--color-texto-mutado);
+}
+
+.pantalla-app {
+  display: none !important;
+}
+
+.pantalla-app.activa {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 85vh;
+  animation: fadeInApp 0.3s ease-out;
+}
+
+.d-none {
+  display: none !important;
+}
+
+/* ================= TABLAS PRO ================= */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  background-color: var(--color-superficie);
+  border-radius: var(--radio-tarjeta);
+  border: 1px solid var(--color-borde);
+  box-shadow: var(--sombra-tarjeta);
+  margin-top: 1rem;
+}
+
+.tabla-gestion {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.tabla-gestion th, 
+.tabla-gestion td {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.tabla-gestion th {
+  background-color: #F8FAFC;
+  color: var(--color-marca-muy-oscuro);
+  font-weight: 700;
+}
+
+.tabla-gestion tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-gestion tr:hover {
+  background-color: rgba(107, 142, 35, 0.025);
+}
+
+.filtro-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+  background-color: var(--color-superficie);
+  padding: 1.25rem;
+  border-radius: var(--radio-tarjeta);
+  border: 1px solid var(--color-borde);
+  box-shadow: var(--sombra-tarjeta);
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.filtro-container .filtro-campo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.filtro-container .filtro-campo label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--color-texto);
+}
+
+.filtro-container .filtro-campo input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-boton);
+  background-color: #FAFAF7;
+  color: var(--color-texto);
+  font-size: 0.95rem;
+}
+
+.filtro-container .btn-limpiar-filtro {
+  height: 42px;
+  padding: 0 1.5rem;
+  white-space: nowrap;
+  background-color: var(--color-marca);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.filtro-container .btn-limpiar-filtro:hover {
+  background-color: var(--color-marca-hover);
+}
+
+.texto-centrado-mutado {
+  text-align: center;
+  color: var(--color-texto-mutado);
+  padding: 2rem !important;
+}
+
+/* ================= NAV INFERIOR DESPIERTO Y MODERNO ================= */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--color-borde);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.6rem 0.5rem;
+  z-index: 1000;
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.bottom-nav .nav-item {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-texto-mutado);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+  padding: 0.3rem 0;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bottom-nav .nav-item:hover {
+  color: var(--color-marca);
+  background-color: rgba(107, 142, 35, 0.06);
+  transform: translateY(-2px);
+}
+
+.bottom-nav .nav-item .material-symbols-outlined {
+  font-size: 24px;
+  transition: transform 0.2s ease;
+}
+
+.bottom-nav .nav-item:hover .material-symbols-outlined {
+  transform: scale(1.12);
+}
+
+/* GRID DE TARJETAS DE REPORTES */
+.grid-reportes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.encabezado-impresion {
+  display: none;
+}
+
+/* ==========================================================================
+   ESTILOS DE IMPRESIÓN (REPORTE PDF PRO)
+   ========================================================================== */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .no-imprimir,
+  .app-header button,
+  .app-header a,
+  .bottom-nav,
+  #header-usuario {
+    display: none !important;
+  }
+
+  .encabezado-impresion {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .grid-reportes {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  .tarjeta-usuario {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* Estilos unificados para íconos y detalles sin inline styles */
+.card-icon-wrapper {
+  background-color: var(--color-marca-muy-claro);
+  color: var(--color-marca);
+}
+
+.icono-usuario,
+.icono-header-marca {
+  color: var(--color-marca);
+}
+
+.btn-imprimir {
+  background-color: var(--color-marca) !important;
+  margin-right: 0.5rem;
+}
+
+.seccion-tabla-margin {
+  display: block;
+  margin-top: 2rem;
+}
+
+.separador-impresion {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid var(--color-borde);
+}
+
+.separador-tarjeta {
+  margin: 6px 0;
+  border: 0;
+  border-top: 1px solid var(--color-borde);
+}
+
+.texto-destacado {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.texto-alerta {
+  font-weight: bold;
+  color: var(--color-alerta);
+}
+
+.texto-info {
+  font-weight: bold;
+  color: var(--color-marca-hover);
+}
+
+.texto-peligro {
+  font-weight: bold;
+  color: var(--color-peligro);
+}
+
+.tarjeta-mortalidad {
+  border-left-color: var(--color-peligro) !important;
+}
+
+.badge-peligro {
+  background-color: #fee2e2 !important;
+  color: var(--color-peligro) !important;
+}
